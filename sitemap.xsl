@@ -19,13 +19,14 @@
 			}
 			html {
 				scroll-behavior: smooth;
+				font-size: 16px;
+				line-height: 24px;
 			}
 			body {
 				font-family: Inter, ui-sans-serif, system-ui, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
-				font-size: 16px;
-				line-height: 24px;
 				color: #282C34;
-				max-width: 1200px;
+				width: 80%;
+				max-width: 75rem;
 				margin: 0 auto;
 				background-color: #F8F9FE;
 				-webkit-font-smoothing: antialiased;
@@ -98,6 +99,76 @@
 				color: #64748b;
 				font-weight: 600;
 			}
+			
+			@media (max-width: 1440px) {
+				body {
+					width: 85%;
+				}
+			}
+			@media (max-width: 1280px) {
+				body {
+					width: 90%;
+				}
+			}
+			@media (max-width: 920px) {
+				th:last-child,
+				td[data-label="Priority"] {
+					display: none;
+				}
+				table {
+					grid-template-columns: 3.75fr 1.5fr 1.25fr;
+				}
+			}
+			@media (max-width: 768px) {
+				body { 
+					font-size: 0.9375rem;
+					line-height: 1.375rem;
+				}
+				h1 { font-size: 2rem; }
+				table {
+					display: block;
+					width: 100%;
+					overflow-x: auto;
+					box-shadow: none;
+					border-radius: 0;
+				}
+				thead {
+					display: none;
+				}
+				tbody,
+				tr,
+				td {
+					display: block;
+					width: 100%;
+				}
+				tr {
+					background: #fff;
+					box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+					border-radius: 0.5rem;
+					padding: 0.5rem 0;
+				}
+				td {
+					padding: 12px 20px;
+					border-bottom: none;
+					text-align: left;
+					position: relative;
+				}
+				td:before {
+					content: attr(data-label);
+					display: block;
+					font-weight: 600;
+					color: #64748b;
+					margin-bottom: 0.25rem;
+					font-size: 0.95em;
+				}
+			}
+			@media (max-width: 600px) {
+				body { 
+					font-size: 0.875rem;
+					line-height: 1.25rem;
+				}
+				h1 { font-size: 1.5rem; }
+			}
 		</style>
 	</head>
 	<body>
@@ -117,18 +188,18 @@
 			<tbody>
 				<xsl:for-each select="sitemap:urlset/sitemap:url">
 				<tr>
-					<td>
+					<td data-label="URL">
 						<a href="{sitemap:loc}">
 							<xsl:value-of select="sitemap:loc" />
 						</a>
 					</td>
-					<td>
+					<td data-label="Last Modified">
 						<xsl:value-of select="sitemap:lastmod" />
 					</td>
-					<td>
+					<td data-label="Change Frequency">
 						<xsl:value-of select="sitemap:changefreq" />
 					</td>
-					<td>
+					<td data-label="Priority">
 						<xsl:attribute name="class">
 							<xsl:choose>
 							<xsl:when test="sitemap:priority >= 0.9">priority-high</xsl:when>
@@ -142,6 +213,33 @@
 				</xsl:for-each>
 			</tbody>
 		</table>
+		<script type="text/javascript"><![CDATA[
+(function() {
+  function processLastModified(truncate) {
+    var cells = document.querySelectorAll('td[data-label="Last Modified"]');
+    cells.forEach(function(cell) {
+      if (truncate) {
+        if (!cell.dataset.fullvalue) cell.dataset.fullvalue = cell.textContent;
+        // Remove timezone (assumes format: YYYY-MM-DD HH:MM +00:00)
+        cell.textContent = cell.textContent.replace(/\s\+\d{2}:\d{2}$/, '');
+      } else {
+        if (cell.dataset.fullvalue) cell.textContent = cell.dataset.fullvalue;
+      }
+    });
+  }
+
+  function handleResize() {
+    if (window.innerWidth <= 1200) {
+      processLastModified(true);
+    } else {
+      processLastModified(false);
+    }
+  }
+
+  window.addEventListener('resize', handleResize);
+  window.addEventListener('DOMContentLoaded', handleResize);
+})();
+]]></script>
 	</body>
 </html>
 </xsl:template>
