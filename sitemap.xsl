@@ -165,7 +165,7 @@
 					background: #fff;
 					box-shadow: 0 1px 3px rgba(0,0,0,0.06);
 					border-radius: 1rem;
-					padding: 0.5rem 0.5rem;
+					padding: 0.5rem 0rem;
 					border: 1px solid #eaecf0;
 					margin-bottom: 0.875rem;
 				}
