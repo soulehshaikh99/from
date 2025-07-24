@@ -87,6 +87,12 @@
 			tr:hover td {
 				background-color: #eff3ff;
 			}
+			td[data-label="URL"] {
+				word-wrap: break-word;
+			}
+			td[data-label="Change Frequency"] {
+				text-transform: capitalize;
+			}
 			.priority-high {
 				color: #1DB954;
 				font-weight: 600;
@@ -110,6 +116,13 @@
 					width: 90%;
 				}
 			}
+			@media (max-width: 1024px) {
+				h1 {
+					font-size: 2rem;
+					line-height: 2.375rem;
+					margin-bottom: 1.25rem;
+				}
+			}
 			@media (max-width: 920px) {
 				th:last-child,
 				td[data-label="Priority"] {
@@ -124,7 +137,11 @@
 					font-size: 0.9375rem;
 					line-height: 1.375rem;
 				}
-				h1 { font-size: 2rem; }
+				h1 {
+					font-size: 1.875rem;
+					line-height: 2.25rem;
+					margin-top: 2.125rem;
+				}
 				table {
 					display: block;
 					width: 100%;
@@ -135,6 +152,9 @@
 				thead {
 					display: none;
 				}
+				tbody {
+					background-color: #F8F9FE;
+				}
 				tbody,
 				tr,
 				td {
@@ -144,8 +164,16 @@
 				tr {
 					background: #fff;
 					box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-					border-radius: 0.5rem;
-					padding: 0.5rem 0;
+					border-radius: 1rem;
+					padding: 0.5rem 0.5rem;
+					border: 1px solid #eaecf0;
+					margin-bottom: 0.875rem;
+				}
+				tr:last-child {
+					margin-bottom: unset;
+				}
+				tr:hover td {
+					background-color: unset;
 				}
 				td {
 					padding: 12px 20px;
@@ -167,7 +195,13 @@
 					font-size: 0.875rem;
 					line-height: 1.25rem;
 				}
-				h1 { font-size: 1.5rem; }
+				h1 { 
+					font-size: 1.5rem;
+					line-height: 2rem;
+					margin-top: 2rem;
+					margin-bottom: 1.125rem;
+					padding-bottom: 0.75rem;
+				}
 			}
 		</style>
 	</head>
@@ -228,12 +262,36 @@
     });
   }
 
+  function makeCellsClickable(isMobile) {
+    var cells = document.querySelectorAll('td[data-label="URL"]');
+    cells.forEach(function(cell) {
+      cell.onclick = null;
+      cell.style.cursor = '';
+      if (isMobile) {
+        cell.style.cursor = 'pointer';
+        cell.onclick = function(e) {
+          // If the click was on a link, let the link handle it
+          if (e.target.tagName.toLowerCase() === 'a') return;
+          var link = cell.querySelector('a');
+          if (link && link.href) {
+            window.location.href = link.href;
+          }
+        };
+      }
+    });
+  }
+
   function handleResize() {
     if (window.innerWidth <= 1200) {
       processLastModified(true);
     } else {
       processLastModified(false);
     }
+	if(window.innerWidth <= 768) {
+	  makeCellsClickable(true);
+	} else {
+	  makeCellsClickable(false);
+	}
   }
 
   window.addEventListener('resize', handleResize);
