@@ -14,8 +14,14 @@ RewriteRule ^(.*)$ http://www.example.com/$1 [L,R=301]
     Require all denied
 </FilesMatch>
 
-# Redirect /tools, /tools/, /tools/index, /tools/index.html to homepage (Temporary Redirect)
-RewriteCond %{REQUEST_URI} ^/tools(/|/index(\.html)?)?$ [NC]
+# Temporary redirects for specific tools back to homepage
+RewriteCond %{REQUEST_URI} ^/tools/csv-to-json\.html$ [NC]
+RewriteRule ^ / [R=302,L]
+
+RewriteCond %{REQUEST_URI} ^/tools/json-to-csv\.html$ [NC]
+RewriteRule ^ / [R=302,L]
+
+RewriteCond %{REQUEST_URI} ^/tools/bmi-calculator\.html$ [NC]
 RewriteRule ^ / [R=302,L]
 
 RewriteCond %{THE_REQUEST} /([^.]+)\.html [NC]
