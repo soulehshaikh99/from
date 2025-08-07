@@ -1,8 +1,5 @@
-# User-agent: *
-# Disallow: /admin/
-# Allow: /
-
 User-agent: *
-Disallow: /
+Disallow: /admin/
+Allow: /
 
-Sitemap: https://thegeekytutor.netlify.app/sitemap.xml
+Sitemap: https://syntaxtoolbox.com/sitemap.xml
