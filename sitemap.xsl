@@ -42,8 +42,8 @@
 			h1 {
 				font-size: 2.25rem;
 				line-height: 2.5rem;
-				color: #1B56FD;
-				border-bottom: 1px solid #0243fc;
+				color: #1b56fd;
+				border-bottom: 1px solid #0c3ae9;
 				margin-top: 2.25rem;
 				margin-bottom: 1.5rem;
 				padding-bottom: 1rem;
@@ -55,7 +55,7 @@
 			}
 			a:hover {
 				text-decoration: underline;
-				color: #023de3;
+				color: #0c3ae9;
 			}
 			table {
 				display: grid;
@@ -80,7 +80,7 @@
 				text-align: left;
 			}
 			th {
-				background-color: #1B56FD;
+				background-color: #1b56fd;
 				color: white;
 				font-weight: 600;
 			}
