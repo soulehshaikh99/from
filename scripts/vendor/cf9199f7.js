@@ -1,1 +1,0 @@
-function $(){}$.qs=function(n){return document.querySelector(n)},$.qsa=function(n){return document.querySelectorAll(n)},$.reveal=function(...n){for(const o of n)o.classList.remove("rq")},$.conceal=function(...n){for(const o of n)o.classList.add("rq")};
